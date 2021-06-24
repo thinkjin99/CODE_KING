@@ -7,7 +7,6 @@ def Permutation(arr,path):
         print()
         return
 
-
     for i in arr:
         arrCopy = copy.deepcopy(arr)
         _path = copy.deepcopy(path)
