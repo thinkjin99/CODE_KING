@@ -15,6 +15,5 @@ def Permutation(arr,path):
         arrCopy.remove(i)
         Permutation(arr,_path)
 
-
 if __name__ =='__main__':
     Permutation([int(i) for i in input().split()],[])
