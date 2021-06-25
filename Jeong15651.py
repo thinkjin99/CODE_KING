@@ -6,7 +6,6 @@ def Permutation(arr,path):
             print(str(i) + " ",end = '')
         print()
         return
-
     #왜 그냥 path를 사용하면 안될까..?
     #append를 하면서 필연적으로 path 자체의 값이 변하게 돼 있다.
     #호출한 위치를 정확히 기억하기 위해서 copy를 사용한다.
