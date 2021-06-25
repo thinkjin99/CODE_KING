@@ -10,8 +10,10 @@ def Permutation(arr,depth):
         print(res)
         return
     for i in range(depth, n):
+        #상태 트리를 생각하면 단순하다. 각각의 숫자의 위치를 교환하는 것이다.
         arr[depth],arr[i] = arr[i],arr[depth]
         Permutation(arr,depth + 1)
+        #위치를 바꾼 배열을 원 상태로 복기 시킨다
         arr[depth],arr[i] = arr[i],arr[depth]
 
 
