@@ -1,10 +1,9 @@
-import copy
 import sys
-def merge(arr,start,mid,end):
+def merge(arr,start,mid,end,order):
     sortedArray = []
     left,right = (start,mid + 1)
     while left <= mid and right <= end:
-        if arr[left] < arr[right]:
+        if arr[left][order] <= arr[right][order]:
             sortedArray.append(arr[left])
             left += 1
         else:
@@ -17,26 +16,22 @@ def merge(arr,start,mid,end):
         sortedArray.extend(arr[left: mid + 1])
 
     arr[start : end + 1] = sortedArray
-    print(sortedArray)
-    # print(arr)
     
-def mergeSort(arr,start,end):
+def mergeSort(arr,start,end,order):
     if start < end:
         mid = (start + end) // 2
-        mergeSort(arr,start,mid)
-        print(arr[start:mid],arr[mid:end])
-        mergeSort(arr,mid + 1,end)
-        merge(arr,start,mid,end)
+        mergeSort(arr,start,mid,order)
+        mergeSort(arr,mid + 1,end,order)
+        merge(arr,start,mid,end,order)
 
 if __name__ == '__main__':
-    # n = sys.stdin.readline()
-    n= 3
-    a = [1,5,2,6,8,3,4]
-    # for i in range(n):
-    #     a.append(tuple(input().split()))
-    # b = [int(i) for i in input().split()]
-    # res = ''
-    # for i in merge(a,b):
-    #     res += f"{i} "
-    mergeSort(a,0,len(a) - 1)
-    # print(a)
+    n = sys.stdin.readline()
+    arr = []
+    for i in range(int(n)):
+        arr.append(tuple(map(int,sys.stdin.readline().split())))
+    mergeSort(arr,0,len(arr) - 1,1)
+    mergeSort(arr,0,len(arr) - 1,0)
+    res = ''
+    for i,j in arr:
+        res += f"{i} {j}\n"
+    print(res)
