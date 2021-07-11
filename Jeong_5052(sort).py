@@ -14,6 +14,7 @@ if __name__ == '__main__':
         for _ in range(n):
             phone_book.append(sys.stdin.readline().strip())
         phone_book.sort()
+        print(phone_book)
         solution(phone_book)
 
 
