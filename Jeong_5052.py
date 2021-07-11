@@ -1,46 +1,27 @@
 import sys
-class Node:
-    def __init__(self,key,data = None):
-        self.key = key
-        self.data = data
-        self.child = {}
-class Trie:
-    def __init__(self):
-        self.head = Node(None)
-        
-    def insert(self,PhoneNum):
-        current = self.head
-        for n in PhoneNum:
-            if n not in current.child:
-                current.child[n] = Node(n)
-            current = current.child[n]
-        current.data = True
-
-    def search(self,PhoneNum):
-        current = self.head
-        for n in PhoneNum: #접두사니까 자기자신보다 한칸 작은 글자까지 확인한다.
-            if current.data != None:
-                return True
-            current = current.child[n]
-        return False #trie안에 문자열이 존재
-        #trie안에 문자열이 존재하지 않음
+def FindPrefix(phoneNums):
+    prefix = {} #접두어를 저장하는 딕셔너리
+    for phone_number in phoneNums:
+        prefix[phone_number] = 1
+    lengths = {len(i) for i in phoneNums}
+    for phone in phoneNums:
+        for length in lengths: #해당 phoneNum보다 작은 직전의 길이까지 slice해서 비교해본다.
+            if len(phone) <= length:
+                continue
+            if phone[:length] in prefix:
+                print("NO")
+                return  #이미 존재하면 일관성 없음
+    return print("YES") #일관성이 있는 경우
 
 if __name__ == '__main__':
-    for _ in range(int(input())):
-        n = int(sys.stdin.readline())
-        trie = Trie()
+    t = int(input())
+    for _ in range(t):
         phoneNums = []
-
+        n = int(sys.stdin.readline())
         for _ in range(n):
-            pNum = sys.stdin.readline().strip()
-            phoneNums.append(pNum)
-            trie.insert(pNum)
+            phoneNum = sys.stdin.readline().strip()
+            phoneNums.append(phoneNum)
+        FindPrefix(phoneNums)
 
-        is_prefix = False
-        for pNum in phoneNums:
-            if trie.search(pNum) == True:
-                is_prefix = True
-                break
-    
-        if is_prefix: print("NO")
-        else: print('YES')
+
+
