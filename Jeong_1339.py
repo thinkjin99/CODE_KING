@@ -13,12 +13,12 @@ def MakeQueue(priorityQueue):
     value = [i for i in range(9,-1,-1)] #0~9까지 알파벳의 값 생성
     valueDict = dict()
     while len(priorityQueue) > 0:
-        length,longest = heapq.heappop(priorityQueue)
+        longest = heapq.heappop(priorityQueue)[1]
         if longest[0] not in valueDict:
             valueDict[longest[0]] = value.pop(0)
         longest = longest[1:]
         if len(longest) > 0:
-            heapq.heappush(priorityQueue,(-len(longest),longest))
+            heapq.heappush(priorityQueue,(-getPrioNum(longest),longest))
     return valueDict
 
 if __name__ == '__main__':
@@ -28,10 +28,10 @@ if __name__ == '__main__':
     for _ in range(n):
         word = sys.stdin.readline().rstrip()
         words.append(word)
-        prioNum = getPrioNum(word)
-        heapq.heappush(priorityQueue,(prioNum,word))
+        heapq.heappush(priorityQueue,(-getPrioNum(word),word))
 
     valueDict = MakeQueue(priorityQueue)
+    print(valueDict)
     result = 0
     for word in words:
         digit = len(word) - 1
