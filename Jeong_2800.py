@@ -16,7 +16,6 @@ if __name__ == '__main__':
     for i,v in enumerate(expression):
         if v == '(':openBrackets.append(i)
         if v == ')':bracketsPair.append((openBrackets.pop(),i))
-    # bracketsPair.sort()
     result = []
     PowerSet(bracketsPair,[],result)
     ans = set()
@@ -27,6 +26,5 @@ if __name__ == '__main__':
                s[index] = ''
         ans.add(''.join(s))
     for i in sorted(ans): print(i)
-    
 
 
