@@ -20,7 +20,6 @@ if __name__ == '__main__':
         word = sys.stdin.readline().rstrip()
         words.append(word)
     valueDict = getPrioNum(words)
-    # print(valueDict)
     result = 0
     for word in words:
         digit = len(word) - 1
