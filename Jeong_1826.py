@@ -8,16 +8,15 @@ for _ in range(n):
 town,nowOil = info.pop()
 maxHeap = []
 info.sort()
-index,ans = (0,0)
+ans = 0
 while nowOil < town:
-    for loc,oil in info[index:]:
+    for (loc,oil) in info[:]:
         if loc > nowOil: break #현재 기름량으로 도착할 수 있는 주요소라면.
         heapq.heappush(maxHeap,-oil)
-        index += 1
+        info.pop(0)
     if len(maxHeap) == 0:
         ans = -1
         break
     nowOil -= heapq.heappop(maxHeap)
-
     ans += 1
 print(ans)
