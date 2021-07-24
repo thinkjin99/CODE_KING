@@ -11,6 +11,7 @@ def floyd_warshall(n, edges):
     # k : 경유지 (각 정점들을 경유지로 설정)
     for k in range(1, n+1):
         for i in range(1, n):
+            if i == k or adj[i][k] == float('inf'): continue
             for j in range(i + 1, n+1):
             	# 정점 i -> j로 갈 때 기존 거리값과 k를 거쳐갈 때의 거리 값 중 작은 값을 저장
                 adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j])
