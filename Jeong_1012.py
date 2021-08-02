@@ -12,7 +12,6 @@ def DFS(y_loc,x_loc):
 
 if __name__ == '__main__':
     t = int(sys.stdin.readline())
-
     for _ in range(t):
         m,n,k = map(int,sys.stdin.readline().split())
         visited = [[False for _ in range(m+1)] for _ in range(n+1)]
@@ -23,10 +22,10 @@ if __name__ == '__main__':
         for _ in range(k):
             #x is col, y is row
             x,y = map(int,sys.stdin.readline().split())
-            baechu.append((y,x))
+            baechu.append((y,x)) # save baechu location 
             loc_array[y][x] = 1
 
-        while baechu:
+        while baechu: #iterate until all baechu is visited
             y_loc, x_loc = baechu.pop(0)
             if visited[y_loc][x_loc]:
                 continue
