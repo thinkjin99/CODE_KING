@@ -1,35 +1,27 @@
 import sys
+from collections import deque
 # from collections import Counter
 
-def BFS(tomato_loc):
-    queue = set() #따로 반복 처리를 할 필요가 없게 하기 위해
-    z,x,y = tomato_loc
-    queue.add((z,x,y,0))
-    date_map[z][x][y] = 0 #시작위치는 도달까지 0일이 걸림으로
-
+def BFS(red_tomatoes):
+    queue = deque(red_tomatoes) #따로 반복 처리를 할 필요가 없게 하기 위해
     while queue:
-        z,x,y,days = queue.pop()
-        for dx,dy in zip((0, 1, 0, -1),(1, 0, -1, 0)): #현재박스에서 전후좌우
-            next_x, next_y = x + dx, y + dy
-            if 0 <= next_x < n and 0 <= next_y < m:
-                if tomatoe_box[z][next_x][next_y] == 0 and days + 1 < date_map[z][next_x][next_y]:
-                    queue.add((z,next_x, next_y, days + 1))
-                    date_map[z][next_x][next_y] = days + 1
-
-        for dz in (1,-1): #현재 위치의 상,하에 인접한 토마토 검사
-            next_z = z + dz
-            if 0 <= next_z < h:
-                if tomatoe_box[next_z][x][y] == 0 and days + 1 < date_map[next_z][x][y]:
-                    queue.add((next_z,x, y, days + 1))
-                    date_map[next_z][x][y] = days + 1
-
-
+        z,x,y = queue.popleft()
+        for dz,dx,dy in [(0,1,0),(0,-1,0),(0,0,1),(0,0,-1),(1,0,0),(-1,0,0)]: #현재박스에서 전후좌우
+            next_z, next_x, next_y = z + dz, x + dx, y + dy
+            if 0 <= next_x < n and 0 <= next_y < m and 0 <= next_z < h and tomatoe_box[next_z][next_x][next_y] == 0: #먼저 도착하는 친구가 최단거리임!!
+                    queue.append((next_z,next_x,next_y))
+                    tomatoe_box[next_z][next_x][next_y] = tomatoe_box[z][x][y] + 1
+        # print('-' * 10)
+        # print(queue)
+        # for t in tomatoe_box:
+        #     for r in t:
+        #         print(r)
+    
 
 if __name__ == '__main__':
     m,n,h = map(int,input().split())
     red_tomatoes = []
     tomatoe_box = [[[] for _ in range(n)] for _ in range(h)] #3차원 리스트로 토마토 박스를 생성
-    date_map = [[[100 for _ in range(m)] for _ in range(n)] for _ in range(h)] #각 토마토까지 익는데 걸리는 날짜를 저장한다.
     green_tomatoes = []
     for height in range(h):
         for row in range(n):
@@ -44,18 +36,15 @@ if __name__ == '__main__':
         print(0)
 
     else:
-        for tomato_loc in red_tomatoes:
-            BFS(tomato_loc)
-        
+        BFS(red_tomatoes)
         res = 0
         for h,r,c in green_tomatoes:
-            if date_map[h][r][c] == 100: #방문하지 못한 토마토가 존재하는 경우
+            if tomatoe_box[h][r][c] == 0: #방문하지 못한 토마토가 존재하는 경우
                 print(-1)
-                break  #-1을 출력하고 종료
-            else:
-                res = max(res,date_map[h][r][c]) #방문한 토마토 중 최대 값을 탐색
-        
-        print(res)
+                sys.exit()  #-1을 출력하고 종료
+
+            res = max(res,tomatoe_box[h][r][c]) #방문한 토마토 중 최대 값을 탐
+        print(res - 1)
     
 
         
