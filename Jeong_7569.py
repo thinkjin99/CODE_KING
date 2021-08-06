@@ -1,6 +1,5 @@
 import sys
 from collections import deque
-# from collections import Counter
 
 def BFS(red_tomatoes):
     queue = deque(red_tomatoes) #따로 반복 처리를 할 필요가 없게 하기 위해
@@ -11,12 +10,6 @@ def BFS(red_tomatoes):
             if 0 <= next_x < n and 0 <= next_y < m and 0 <= next_z < h and tomatoe_box[next_z][next_x][next_y] == 0: #먼저 도착하는 친구가 최단거리임!!
                     queue.append((next_z,next_x,next_y))
                     tomatoe_box[next_z][next_x][next_y] = tomatoe_box[z][x][y] + 1
-        # print('-' * 10)
-        # print(queue)
-        # for t in tomatoe_box:
-        #     for r in t:
-        #         print(r)
-    
 
 if __name__ == '__main__':
     m,n,h = map(int,input().split())
