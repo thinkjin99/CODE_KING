@@ -8,7 +8,8 @@ def prim(graph, start_node):
     candidate = graph[start_node] # 인접 간선 추출
     heapq.heapify(candidate) # 우선순위 큐 생성
     edge_cnt, mst_weight = 0,0 # 전체 가중치
-
+    min_weights = [float('inf') for _ in range(n+1)]
+    min_weights[1] = 0
     while candidate:
         weight, _, v = heapq.heappop(candidate) # 가중치가 가장 적은 간선 추출
         if not visited[v]: # 방문하지 않았다면
@@ -16,9 +17,10 @@ def prim(graph, start_node):
             mst_weight += weight # 전체 가중치 갱신
             edge_cnt += 1
 
-            for edge in graph[v]: # 다음 인접 간선 탐색
-                if visited[edge[2]] == 0: # 방문한 노드가 아니라면, (순환 방지)
-                    heapq.heappush(candidate, edge) # 우선순위 큐에 edge 삽입
+            for w,u,v in graph[v]: # 다음 인접 간선 탐색
+                if visited[v] == 0 and min_weights[v] > w: # 방문한 노드가 아니라면, (순환 방지)
+                    heapq.heappush(candidate, (w,u,v)) # 우선순위 큐에 edge 삽입
+                    min_weights[v] = w
         
         if edge_cnt == n - 1: break
     return mst_weight
