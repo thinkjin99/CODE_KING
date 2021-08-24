@@ -14,7 +14,7 @@ def floyd(graph):
     for k in range(n):
         for i in range(n):
             for j in range(n): 
-                if (graph[i][j] > graph[i][k] + graph[k][j]):
+                if (graph[i][j] > graph[i][k] + graph[k][j]) and (graph[i][k] != MAX and graph[k][j] != MAX):
                     graph[i][j] = graph[i][k] + graph[k][j]
                     path[i][j] = k
             
@@ -37,7 +37,7 @@ for index,c in enumerate(cycles):
 if graph[0][n-1] == MAX or is_cycle:
     print(-1)
 
-else:
+else: 
     res = []
     print_path(0,n-1,path)
     res = [0] + res + [n-1]
