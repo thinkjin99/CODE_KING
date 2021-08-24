@@ -8,7 +8,7 @@ def update_distance(graph,distance,cycle = False):
 
     return False
 
-def bellman_ford(start,graph):
+def bellman_ford(graph):
     distance = [123456789 for _ in range(n+1)]
     distance[1] = 0
     for _ in range(1,n):
@@ -30,6 +30,6 @@ for _ in range(t):
         w_u,w_v,w_w = map(int,input().split()) #웜홀의 정보
         graph[w_u].append((w_v,-w_w))
 
-    res = "YES" if (bellman_ford(w_u,graph)) else "NO"
+    res = "YES" if (bellman_ford(graph)) else "NO"
     print(res)
 
