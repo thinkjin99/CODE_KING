@@ -1,45 +1,36 @@
-import sys
-input = sys.stdin.readline
-expression = input()
-#2(3(4)25(6)1)
-def find_brackets(expression):
-    openBrackets = []
-    bracketsPair = []
-    for i,v in enumerate(expression):
-        if v == '(':openBrackets.append(i)
-        if v == ')':bracketsPair.append((openBrackets.pop(),i))
-    
-    return bracketsPair
+strings = input()
+def unpack(start,end,k):
+    res,last = 0,0
+    is_open,is_close = False,False
+    open_cnt,close_cnt = 0,0
+    for i,s in enumerate(strings[start:end],start = start):
+        if s == '(':
+            if not is_open:
+                open_index = i
+                is_open = True
+            open_cnt += 1
 
-def find_remains(start,end):
-    e_range = expression[start + 1 : end + 1]
-    last = []
-    in_brackets = False
-    for i, e in enumerate(e_range):
-        if e == '(':
-            in_brackets = True
-        elif e == ')':
-            in_brackets = False
-            continue
+        if s == ')':
+            close_cnt += 1
+            if close_cnt == open_cnt:
+                close_index = i
+                is_close = True
+        
+        else:
+            if not is_open:
+                last += 1
 
-        if in_brackets: continue
+        if is_close and is_open:
+            res += unpack(open_index + 1, close_index, int(strings[open_index - 1]))
+            last -= 1
+            close_cnt = 0
+            open_cnt = 0
+            is_close = False
+            is_open = False
 
-        if i+1 < len(e_range) and e_range[i+1] != '(': #k인 경우 검사
-            last.append(e)
-    return last
+    return (res + last) * k
 
-brackets = find_brackets(expression)
-res,level_len = 0,0
-while brackets:
-    cur_s, cur_e = brackets.pop()
-    k = expression[cur_s - 1]
-    cur_len = cur_e - cur_s - 1
-    level_len += cur_len * k
+brackets_count = 0
+res = unpack(0,len(strings),1)
 
-    next_s,next_e = brackets[0][0],brackets[0][1]
-    if next_s < cur_s and next_e > cur_e:
-        rest = find_remains(next_s,next_e)
-        res = 
-        level_len = 0
-
-
+print(res)
