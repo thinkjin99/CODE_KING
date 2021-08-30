@@ -1,32 +1,24 @@
 import sys
 input = sys.stdin.readline
 n,k = map(int,input().split())
-stats = [[] for _ in range(3)]
+stats = []
 
 for _ in range(n):
-   for i,s in enumerate([int(i) for i in input().split()]):
-       stats[i].append(s)
+    stats.append([int(i) for i in input().split()])
 
-def check_count():
-    x,y,z = [sorted(s) for s in stats] #3개의 스텟을 오름차순으로 정렬
-    stat_data = []
-    for i in range(n):
-        temp = []
-        for s in stats:
-            temp.append(s[i])
-        stat_data.append(temp)
+res = float('inf')
+for s in range(n):
+    str_ = stats[s][0]
+    for d in range(n):
+        dex_ = stats[d][1]
+        int_ = []
+        for s,d,i in stats:
+            if str_ >= s and dex_ >= d: #현재 선택한 str과 dex의 크기가 크다면
+                int_.append(i) #조건에 만족하는 int값을 추가해준다.
+        
+        if len(int_) >= k:
+            int_.sort()
+            sum_of_stat = str_ + dex_ + int_[k-1]
+            res = min(res,sum_of_stat)
 
-    res = float('inf')
-    for x_ in x:
-        for y_ in y:
-            for z_ in z:
-                count = 0
-                for s in stat_data:
-                    str_,int_,dex_ = s
-                    if str_ <= x_ and int_ <= y_ and dex_ <= z_:
-                        count += 1
-                    if count >= k: res = min(res,(x_ + y_ + z_))
-    return res
-
-res = check_count()
 print(res)
