@@ -11,8 +11,8 @@ def bfs(graph):
         if cur == n - 1: return 'happy'
         for i,(x,y) in enumerate(graph):
             if not visited[i]:
-                if abs(graph[cur][0] - x) + abs(graph[cur][1] - y) <= 1000:
-                    queue.append(i)
+                if abs(graph[cur][0] - x) + abs(graph[cur][1] - y) <= 1000: #거리가 1000이하 인지 확인한다.
+                    queue.append(i) #연결돼 있다는 의미이므로 큐에 추가해준다.
                     visited[i] = True
     return 'sad'
 
