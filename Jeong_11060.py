@@ -1,5 +1,6 @@
 n = int(input())
 jumps = [int(i) for i in input().split()]
+# jumps = [*map(int,input().split())]
 MAX = 1001
 dp = [MAX] * n
 dp[0] = 0
