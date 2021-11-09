@@ -14,7 +14,9 @@ res = 0
 dist = [(0,0)]
 node_included = [False] * n
 max_edge = 0
+mst = []
 for _ in range(n):
+    start = cur
     while dist != None:
         w,v = heapq.heappop(dist) #가중치를 기준으로 정렬해야 한다.
         if not node_included[v]: #포함하고 있지 않은 노드 중에서 최소 값을 탐색한다.
@@ -23,7 +25,8 @@ for _ in range(n):
             node_included[v] = True #포함 처리를 해준다.
             max_edge = max(max_edge,w)
             break #최소 값을 찾았다면 더 이상 반복을 수행할 필요없다.
-
+    end = cur
+    mst.append((start+1,end+1))
     for v_,w_ in graph[cur]: #새롭게 연결된 간선들을 초기화 해준다.
         heapq.heappush(dist,(w_,v_))
 print(res-max_edge)
